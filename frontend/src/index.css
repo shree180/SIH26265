@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-ink: #17212b;
+  --color-muted: #5f6b76;
+  --color-line: #dde3e8;
+  --color-primary: #173f5f;
+  --color-primary-soft: #e8eef3;
+  --color-accent: #2d6a6a;
+  --color-success: #216e4e;
+  --color-warning: #8a5a00;
+  --color-danger: #b42318;
+  --color-info: #2457a7;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --radius-panel: 10px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.011em;
+  }
+}
+
+@layer utilities {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .panel {
+    @apply bg-surface border border-line rounded-[var(--radius-panel)];
+  }
+
+  .hairline {
+    box-shadow: 0 1px 2px rgb(23 33 43 / 0.04);
+  }
+
+  /* One short settling transition per screen, never per card. The global
+     prefers-reduced-motion rule above collapses it to effectively nothing. */
+  .rise {
+    animation: rise 200ms ease-out both;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
